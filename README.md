@@ -1,8 +1,18 @@
 # PclMemOpt
 
-PCL-CE「百宝箱 → 内存优化」功能的**独立复刻实现**。
+PCL-CE「百宝箱 → 内存优化」功能的独立命令行版本。
 
-原功能已在 PCL-CE `v2.15.0-beta.3` 中被移除（PR #3067），本工具把那套逻辑原样搬出来做成一个独立 CLI，
+> ### ⚠️ 与 PCL / PCL-CE 无关
+>
+> 本项目是**第三方独立作品**，未经 PCL-CE 维护者或龙腾猫跃审核、认可或背书，
+> 与两者**均无隶属关系**。
+>
+> 内存操作部分（`NtInterop.cs` / `MemSwap.cs`）逐行取自 **PCL-CE v2.15.0-beta.2**（Apache-2.0），
+> 因此本项目按 **Apache-2.0** 分发，并附 [NOTICE](NOTICE) 说明来源与改动。
+> PCL2 的《分发有限许可》与《存储库合理使用指南》原文收录于 [PCL-LICENCE.md](PCL-LICENCE.md)。
+> 鸣谢：龙腾猫跃（[爱发电](https://afdian.com/a/LTCat)）· [PCL-CE](https://github.com/PCL-Community/PCL-CE)。
+
+原功能已在 PCL-CE `v2.15.0-beta.3` 中被移除（PR #3067），本工具把那套逻辑拿出来做成一个独立 CLI，
 免费获得原有的效果，且不依赖启动器版本。
 
 ## 它做了什么
@@ -142,3 +152,36 @@ dotnet publish -c Release -p:PublishSingleFile=true -p:SelfContained=false
 1. `SystemMemoryListInformation` 等枚举值**从未被微软文档化**，属于逆向结果，
    Windows 大版本更新后可能变更，届时工具会直接失败（好处是它会明确报错，不会静默做错事）；
 2. 它把内存换到页面文件，对 SSD 有额外写入量。
+
+## 协议与署名
+
+本项目按 **Apache License 2.0** 分发（见 [LICENSE](LICENSE)）。
+
+上游来源与各自的义务：
+
+| 上游 | 协议 | 本项目如何履行 |
+|---|---|---|
+| [PCL-CE](https://github.com/PCL-Community/PCL-CE) | Apache-2.0 | 保留协议全文；附 [NOTICE](NOTICE) 指明派生文件、声明改动；不使用其商标暗示背书 |
+| [PCL2（Plain Craft Launcher）](https://github.com/Meloong-Git/PCL) | 《PCL 分发有限许可》+《合理使用指南》 | 全文收录于 [PCL-LICENCE.md](PCL-LICENCE.md)；署名龙腾猫跃并给出赞助链接；明确不与 PCL 混淆 |
+
+### 为什么按 Apache-2.0 而不是 MIT
+
+`NtInterop.cs` 与 `MemSwap.cs` 与 PCL-CE `v2.15.0-beta.2` 的同名文件**逐行等价**（枚举值、结构体布局、
+调用序列全部照抄），属于 Apache-2.0 意义上的**衍生作品**，因此必须沿用 Apache-2.0 并保留 NOTICE，
+不能改为更宽松的协议。
+
+### 关于《PCL 存储库合理使用指南》的归类
+
+按指南的定义，本项目属于**轻度使用**：虽然参考了较大量的内容，但产出的软件与 PCL 的实质功能
+（启动/下载 Java 版 Minecraft、下载或管理 Mod 等）**不存在任何重叠** —— 本工具是一个纯命令行的
+Windows 内存优化程序，没有启动器功能、没有 GUI、没有主题色、没有任何形式的赞助解锁。
+因此适用轻度使用的两条要求：**给出署名**、**不得与 PCL 混淆或暗示与 PCL 有关**；
+重度使用要求的「名称必须以 Plain Craft Launcher (PCL) 开头」等条款不适用。
+
+需要说明的是，`PclMemOpt` 这一名称以 `Pcl` 开头，可能被理解为与 PCL 有关联。本项目已在
+README 顶部与 NOTICE 中明确声明无隶属关系；如果希望进一步降低歧义，可以改名（例如 `WinMemOpt`），
+这属于维护者自行取舍。
+
+### 贡献与再分发
+
+再分发时请一并保留 `LICENSE`、`NOTICE`、`PCL-LICENCE.md` 三个文件，并保留本节的署名信息。

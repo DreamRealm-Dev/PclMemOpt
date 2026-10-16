@@ -1,0 +1,52 @@
+PclMemOpt
+Copyright 2026 DreamRealm-Dev
+
+This product is an independent command-line tool that reimplements the
+"memory optimization" feature (百宝箱 -> 内存优化) that used to ship with PCL-CE
+and was removed in PCL-CE v2.15.0-beta.3 (PR #3067).
+
+===============================================================================
+1. Attribution / upstream works
+===============================================================================
+
+1.1  PCL-CE  --  https://github.com/PCL-Community/PCL-CE
+     Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+     The following files in this project are taken from PCL-CE v2.15.0-beta.2
+     and are therefore derivative works of it:
+
+         this project        <-  upstream (PCL-CE v2.15.0-beta.2)
+         ---------------        ----------------------------------
+         NtInterop.cs        <-  NtInterop.cs
+         MemSwap.cs          <-  MemSwapWorks.cs, MemSwapService.cs
+
+     The NT enum values, structure layouts and the call sequences in those
+     files are carried over from the upstream code.
+
+1.2  Plain Craft Launcher 2 (PCL2)  --  https://github.com/Meloong-Git/PCL
+     Copyright 龙腾猫跃 (LTCat).  Sponsorship: https://afdian.com/a/LTCat
+
+     PCL2 is distributed under its own terms. The full text of
+     《PCL 分发有限许可》 and 《PCL 存储库合理使用指南》 is reproduced verbatim in
+     PCL-LICENCE.md in this repository, and continues to apply as guidance.
+
+===============================================================================
+2. Modifications  (Apache License 2.0, section 4(b))
+===============================================================================
+
+This is NOT the upstream software, and it has NOT been reviewed, approved or
+endorsed by the PCL-CE maintainers or by 龙腾猫跃. It is not affiliated with
+either project.
+
+Changes made relative to PCL-CE:
+
+  * the memory operations were ported from launcher (VB.NET) code into a
+    standalone C# command-line tool targeting .NET 10;
+  * the dedicated elevation child process (PromoteService) was replaced with
+    process self-restart via runas;
+  * CLI argument parsing was added, along with --loop / --dry-run /
+    --no-elevate, per-step timing, NTSTATUS reporting and exit codes;
+  * all launcher functionality was removed -- there is no Minecraft launching,
+    downloading, mod management, GUI or theming of any kind.
+
+See README.md, section "与 PCL-CE 原实现的差异", for the complete diff table.
